@@ -66,7 +66,7 @@ public class User implements Comparable{
 				+ ", " + insuranceCompany;
 	}
 
-
+//Allow users to be compared using their last and first name
 	@Override
 	public int compareTo(Object o) {
 		int result = this.getlName().compareToIgnoreCase(((User) o).getlName());

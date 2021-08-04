@@ -18,17 +18,23 @@ public class Parser {
 
 	public static void sortCSVFile(String fileLocation) throws NumberFormatException, IOException {
 		String line = "";
+		
+//Create maps that will store users while parsing given file 
+//Assuming userid is representative of primary key
+//if multiple users have the same userid we will assume it is the same user
 		Map<String, User> aetna = new HashMap<String,User>(); 
 		Map<String, User> esurance = new HashMap<String,User>();
 		Map<String, User> metLife = new HashMap<String,User>(); 
 		Map<String, User> aflac = new HashMap<String,User>(); 
 		
+//read each line of the file and create a temp user object with the information
 		BufferedReader br = new BufferedReader(new FileReader(fileLocation));
-		
 		while((line = br.readLine())!=null) {
 			String[] userInfo = line.split(",");
 			User currentUser = new User(userInfo[0],userInfo[1],userInfo[2],Integer.parseInt(userInfo[3]),userInfo[4]);
 			
+//sort the user into appropriate map based on company 
+//if a duplicate user is found adjust the users version number
 			switch(currentUser.getInsuranceCompany()) {
 			case "Aetna":
 				if(aetna.containsKey(currentUser.getUserID())) {
@@ -72,6 +78,7 @@ public class Parser {
 			}
 		}
 		
+//convert each map to an array and sort data
 		List<User> aetnaAL = new ArrayList<User>(aetna.values());
 		List<User> esuranceAL = new ArrayList<User>(esurance.values());
 		List<User> metLifeAL = new ArrayList<User>(metLife.values());
@@ -81,7 +88,8 @@ public class Parser {
 		Collections.sort(esuranceAL);
 		Collections.sort(metLifeAL);
 		Collections.sort(aflacAL);
-		
+
+//for each companies array create a new file and write the contents of the array		
 		File aetnaFile = new File("resource/aetna.csv");
 		aetnaFile.createNewFile();
 		FileWriter aetnawriter = new FileWriter("resource/aetna.csv");
@@ -122,6 +130,7 @@ public class Parser {
 				e.printStackTrace();
 			}
 		});
+		
 		aflacwriter.close();
 		br.close();
 		

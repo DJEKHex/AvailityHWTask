@@ -13,7 +13,8 @@ import main.java.lispValidation.LispValidation;
 
 
 public class AllTests {
-	
+
+//run sortCSVFile method before tests to generate insurance co files.	
 	@Before
 	public void generateCVS() {
 		try {
@@ -24,7 +25,7 @@ public class AllTests {
 			e.printStackTrace();
 		}
 	}
-	
+//test one two and three test the lisp validation 	
 	@Test
 	public void test1() {
 		assert(LispValidation.checkCode("(defun double (x) (* x 2))") == true);
@@ -39,7 +40,7 @@ public class AllTests {
 	public void test3() {
 		assert(LispValidation.checkCode("(defun double (x)) (* x 2))") == false);
 	}
-	
+//test that one of the co files matches with the expected file result	
 	@Test
 	public void CSVTestAetna() {
 		File file1 = new File("resource/aetnaCSVSample.CSV");
@@ -52,7 +53,7 @@ public class AllTests {
 			e.printStackTrace();
 		}
 	}
-	
+//test that two different files create are not the same ensuring it is not just one data set in all files.	
 	@Test
 	public void CSVTestAetnaFailCase() {
 		File file1 = new File("resource/metLife.CSV");
